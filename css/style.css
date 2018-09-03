@@ -1,8 +1,5 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    font:15px/1.5 Arial, Helvetica, sans-serif;
+    font: 15px/1.5 Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 0;
     background-color: #A9E2F3;
@@ -13,6 +10,11 @@ body{
     margin: auto;
     overflow:hidden;
 }
+
+u1{
+      margin:0;
+      padding: 0;
+}  
 
 /*Header*/
  header{
@@ -30,12 +32,7 @@ body{
       font-size: 16px;
   }
   
-  header u1{
-      margin:0;
-      padding: 0;
-  }
-  
-  header u1{
+  header li{
      float: left;
      display: inline;
      padding: 0 20px 0 20px;
@@ -45,13 +42,33 @@ body{
       float: left;
   }
   
-    
   header #branding h1{
       margin:0;
   }
   
   header nav{
       float: right;
+      margin-top: 10px;
   }
+
+header .highlight, header .current a{
+    color: #ff3d02;
+    font-weight: bold;
+}
       
-      
+header a:hover{
+    color:#9102ff;
+    font-weight:bold;
+}
+
+
+/*showcase*/
+#showcase{
+    min-height:350px;
+    background:url('../img/ran.jpg') no-repeat;
+    
+}   
+    
+    
+    
+    
