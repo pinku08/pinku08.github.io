@@ -16,6 +16,23 @@ u1{
       padding: 0;
 }  
 
+.button_1{
+    height: 38px;
+    background: #ff00ff;
+    border:0;
+    padding-left: 20px;
+    padding-right:20px;
+    color:#ffffff;
+}
+
+.dark{
+    padding: 15px;
+    background:#3333cc;
+    color:#ffffff;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
 /*Header*/
  header{
      background:#66A6F1;
@@ -80,10 +97,11 @@ header a:hover{
      font-size:20px;
 }
 
+/*Newsletter*/
 newsletter{
     padding: 15px;
     color: #9102ff;
-    background: #35424a;
+    background: #ff3300;
 }
 
 newsletter h1{
@@ -101,4 +119,38 @@ newsletter input[type="email"]{
     width: 250px;
 }
 
-    
+/* Boxes */
+#boxes{
+    margin-top:20px;
+}
+
+#boxes .box{
+    float:left;
+    text-align:center
+    width:30%;
+    padding:10px;
+}
+
+#boxes .box img{
+    width:90px;
+}
+
+/* Sidebar */
+aside#sidebar{
+    float:right;
+    width:30%;
+    margin-top:10px;
+}
+
+/* Main-coL */
+article#main-col{
+    float: left;
+    width: 65%;
+}
+}
+footer{
+    padding: 20px;
+    margin-top: 20px;
+    color: #f9fbfc;
+    background-color:#ff0000;
+}
