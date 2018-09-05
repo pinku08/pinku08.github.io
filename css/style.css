@@ -2,11 +2,11 @@ body{
     font: 15px/1.5 Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 0;
-    background-color: #A9E2F3;
+    background-color: #5d91f7;
 }
 /*Global*/
 .container{
-    width: 80%;
+    width: 100%;
     margin: auto;
     overflow:hidden;
 }
@@ -33,9 +33,9 @@ u1{
     margin-bottom:10px;
 }
 
-/*Header*/
+/* Header */
  header{
-     background:#66A6F1;
+     background:#0a01b5;
       color:#000000;
       padding-top:30px;
       min-height: 70px;
@@ -50,7 +50,7 @@ u1{
   }
   
   header li{
-     float: left;
+     float:left;
      display: inline;
      padding: 0 20px 0 20px;
   }
@@ -78,16 +78,20 @@ header a:hover{
     font-weight:bold;
 }
 
+a {
+    color: #f79be8;
+}
+
 /*showcase*/
 #showcase{
     min-height:500px;
-    background:url('../img/sunset.jpg') no-repeat -100px -75px;
+    background:url('../img/sunset.jpg') no-repeat -150px -75px;
   
     text-align: center;
     color: #9102ff;
 } 
 
- #showcase h1{
+#showcase h1{
      margin-top: 100px;
      font-size: 55px;
      margin-bottom: 10px;
@@ -126,9 +130,9 @@ newsletter input[type="email"]{
 
 #boxes .box{
     float:left;
-    text-align:center
-    width:30%;
-    padding:10px;
+    text-align:center;
+    width:25%;
+    padding:4%;
 }
 
 #boxes .box img{
@@ -153,9 +157,9 @@ article#main-col{
     width: 65%;
 }
 
-/*Services*/
-ul#sevices li{
-      list-style: none
+/* Portfolio */
+ul#Portfolio li{
+      list-style: none;
       padding:20px;
       border:#f2a63c;
       margin-bottom:5px;
