@@ -1,0 +1,281 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Flappy Fairy</title>
+<script type="text/javascript" src="js/processing.js"></script>
+</head>
+<body>
+
+
+<script type="text/processing">
+import processing.pdf.*;
+PFont font1; PFont font2; PFont bold; PFont snow;
+PImage bg; PImage bg2R; PImage change; PImage chara; PImage charaT;
+int x; int cx; int cy; int cVy;
+int numBomb = 7;
+int gameState; PImage bomb; int[] bx = new int[numBomb]; int[] by = new int[numBomb]; int count;
+int score; int highScore; 
+PImage missile; int mx; int my;
+PImage fire; int fx; int fy;
+PImage bg3; int fireCount; int missileCount;
+boolean isShooting; boolean bull;
+PImage ghost; int gx; int gy;
+
+//might have to chNGE THE MISSILe
+void setup(){
+  isShooting = true;
+  bull = false;
+  gameState = -1;
+  font2 = createFont("Georgia", 18);
+  font1 = createFont("CHILLER", 35);
+  bold = createFont("GEORGIA", 24);
+  size(1051,600);
+  bg = loadImage("./img/bg2.png");
+  bg2R = loadImage("./img/bg2R.png");
+  chara = loadImage("./img/chara2.png");
+  charaT = loadImage("./img/princess.png");
+  change = chara;
+  bomb = loadImage("./img/bomb1.png");
+  missile = loadImage("./img/missile.png");
+  fire = loadImage("./img/snowBall.png");
+  bg3 = loadImage("./img/bg3.jpg");
+  ghost = loadImage("./img/monster.png");
+  //create new font
+  snow = createFont("Snowinter-Free-For-Personal-Use.ttf",32);
+  cVy = 2;
+  cy = 100;
+  cx = 50;
+  fx = width + 10000;
+  mx = width + 200;
+  my = (int)random(200,600);
+  for(int i =0; i < numBomb ; i++){
+    bx[i] = width + (int)random(50, 200) + 200*i;
+    by[i] = height/2 + (int)random(-200,200);
+  }
+  
+}
+
+
+void draw(){
+
+  count++;
+  move();
+  if(score > highScore){
+        highScore = score;
+  }
+  if(gameState==0){
+  //Background goes on top!  (first!)
+  image(bg, x, 0);
+  image(bg2R, x+bg.width-6, 0);
+  image(bg, x+2*bg.width -12, 0);
+  if(x < -(2*bg.width+12)){
+    x=0;
+  } 
+
+  //bomb CODE!!
+  for(int i = 0; i<numBomb ; i++){
+    bx[i]-= 2;
+    if(bx[i] < -10){
+      score++;
+      bx[i] = width + (int)random(50, 200);
+      by[i] = height/2 + (int)random(-200,200);
+    }
+    if(abs((int)((fx+10)-(bx[i]+5))) < 10 && abs((int)((fy+10) - (by[i]+32))) < 56){
+      bx[i]+=2000;
+      fx = width +20000;
+      score++;
+    }
+    if(abs((int)((cx+35)-(bx[i]+7))) < 22 && abs((int)((cy+34) - (by[i]+41))) < 74){
+      gameState=1;
+    }
+    image(bomb, bx[i], by[i]);
+    
+    //missile Code
+    if(score >10){
+      mx -= 3;
+      if(score > 20){
+        chaseFairy();
+      }
+      if(mx < -100){
+         mx = width + 2000;
+         my = (int)random(200,600);
+      }
+      if(abs((int)((cx+35)-(mx+75))) < 80 && abs((int)((cy+34) - (my +52))) < 86){
+        gameState=1;
+      }
+      image(missile, mx, my);
+    }     
+  }
+  
+  //Character CODE!!!
+  image(change, cx,cy);
+  cy = cy + cVy;
+  if(count%2 ==0){
+    cVy ++;
+  }
+  x--;
+  checkChara();
+  
+  //snowball CODE
+  image(fire, fx, fy);
+  fx += 10;
+  if(abs((int)((fx+10)-(mx+75))) < 80 && abs((int)((fy+10) - (my+52))) < 86){
+      mx+=2000;  
+      fx =20000;
+      if(missileCount==0){
+        bull = true;
+      }
+      if(missileCount>0){
+        bull = false; 
+      }
+      missileCount++;
+      
+  }
+  if(fx > width + 20){
+    fx = 20000;
+  } 
+ //END GAMESTATE 0 
+ }
+
+  //character Dies:
+  if(gameState==1){
+
+    //BEGIN BUTTON
+    textSize(34);   //SIZE OF TEXT
+    text("You died!!!", 100,146);
+    fill(245); 
+    rect(90,160, 240, 45, 10);  //BACKGROUND OF BUTTON
+    fill(0);
+    //END BUTTON
+    
+    //RESTART GAME
+    if(mouseX > 90 && mouseY > 160 && mouseX < 330 && mouseY < 205){
+      if (mousePressed){
+        cy = 100;
+        cVy = 2;
+        cx = 50;
+        score = 0;
+        fx = width + 10000;
+        mx = width + 200;
+        my = (int)random(200,600);       
+        for(int i =0; i < numBomb ; i++){
+          bx[i] = width + (int)random(50, 200) + 200*i;
+          by[i] = height/2 + (int)random(-200,200);
+        }
+        gameState=0;             
+      }
+ 
+      else{  //HOVER OVER BUT NOT CLICK
+        fill(255,0,0);
+        rect(90,160, 240, 45, 10);
+        fill(0);
+        text("Play Again?", 100,196);  //TEXT ON BUTTON
+      }
+    }
+    else{
+      text("Click Me!!", 100,196);  //TEXT ON BUTTON
+    }  
+  }
+  
+  //TEXT TO SCREEN
+  fill(0);
+  textSize(18);
+  text("Score: " + score, width -130, 30);
+  text("High Score: " + highScore, width - 130, 50);
+  if(score > 8 && score < 12){
+    fill(255,50,50);
+    textSize(50);
+    text("WARNING! ROCKETS!!! ", 160, 110);
+    fill(0);
+    textSize(16);
+  }
+  if(fireCount < 1 && score > 0){
+    if(score <5){
+      text("Did you know Fairy can shoot snowball?", 120, 30);
+    }
+    else{
+       text("Use the DOWN ARROW to shoot", 120, 30);
+    }
+  }
+  if(!isShooting && fireCount >0 && score > 3){
+     text("Nice Job!  You Learned to Shoot", 120, 30);
+     if(fireCount > 3){
+        text("I wonder what things can be killed by snowballs?", 140, 60);
+     }
+   }
+   if(bull){
+     text("WOW! snowball can destroy missiles!", 140, 60);
+   }
+  
+  //START SCREEN
+  if(gameState == -1){
+    image(bg3,0,0);
+    fill(0,0,0, 151);
+    textSize(72);
+    textFont(snow);
+    text("*Click Fairy to play!", 100, 250);
+    if(mousePressed && mouseX>250){
+      gameState = 0;
+    }   
+      //text("balah,blah", x, y);
+    textFont(font2);
+    text("MOVE:  LEFT/RIGHT ARROW", 100, 320);
+    text("FIRE:     DOWN ARROW", 100, 335);
+    text("FLAP:     CLICK MOUSE", 100, 350); 
+    
+    fill(0,0,0, 255);
+    textFont(bold);
+    text("CHARACTER CONTROLS", 100, 290);
+    noFill();
+    rect(95, 300, 262,75, 5);
+  }
+  
+}
+//END DRAW
+
+
+void move(){
+  if (keyPressed){    
+    if(cx > 0 && keyCode==LEFT){
+      cx-=2;
+    }
+    else if(cx <width/2 && keyCode==RIGHT){
+      cx+=2;
+    }
+  }
+
+}
+void keyReleased() {
+   if(keyCode==DOWN){
+     fairyFire();
+   }
+}
+
+void mousePressed(){
+  cVy = -10; 
+  change = charaT;
+}
+
+void mouseReleased(){
+  change = chara; 
+}
+void fairyFire(){
+  fx = cx + 20;
+  fy = cy + 45;
+  fireCount++;
+  if(fireCount > 4){
+    isShooting = true;
+  }
+  else{
+    isShooting = false;
+  }
+}
+void checkChara(){
+  if(cy > height || cy < -10){
+    gameState =1;
+  }
+}
+
+void chaseFairy(){
+   //TODO 
+}

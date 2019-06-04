@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Flappy Fairy</title>
+<script type="text/javascript" src="js/processing.js"></script>
+</head>
+<body>
+
+
+<script type="text/processing">
+import processing.pdf.*;
+
+int x;int y;int r;int Vx;int Vy;
+
+
+void setup(){     //runs once
+  size(600,600);
+  //background(255,100,20);
+  x=100;
+  y=200;
+  r=30;
+  Vx = 5;
+  Vy = 3;
+}
+
+void draw(){
+  background(0);
+  circle(x,y,r);
+  updatePosition();
+  bounce();
+  fill(random(0,255),random(0,255),random(0,255));
+}
+void bounce(){
+  if (x > width){
+    Vx *= -1;
+  }
+  if(y > height){
+    Vy *= -1;
+  }
+  if (x < 0){
+    Vx *= -1;
+  }
+  if(y < 0){
+    Vy *= -1;
+  }
+}  
+void updatePosition(){
+  x += Vx;
+  y += Vy;
+}
